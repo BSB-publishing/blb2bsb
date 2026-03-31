@@ -1,0 +1,13 @@
+__pycache__/
+.claude/
+content_usj/bereanbible/*
+!content_usj/bereanbible/.gitkeep
+content_usj/majoritybible/*
+!content_usj/majoritybible/.gitkeep
+cache/bereanbible/*
+!cache/bereanbible/.gitkeep
+cache/majoritybible/*
+!cache/majoritybible/.gitkeep
+output/
+example/
+earlier/
