@@ -10,10 +10,13 @@ LEXICON = $(SOURCES_DIR)/stepbible-tbesg.json
 USJ_DIR = $(SOURCES_DIR)/bsb_strongs_full
 
 # Input and output
-INPUT_CSV = example/blb.csv
+INPUT_CSV = $(SOURCES_DIR)/blb.csv
 OUTPUT_DIR = output
 
-.PHONY: all help fetch parse align emit test clean
+# Release version (set via: make release VERSION=v1.1)
+VERSION ?= v1.0
+
+.PHONY: all help fetch parse align emit test clean release
 
 all: $(OUTPUT_DIR)/blb_interlinear.tsv
 
@@ -40,7 +43,7 @@ $(OUTPUT_DIR):
 	mkdir -p $(OUTPUT_DIR)
 
 # Check that sources exist
-$(TAGNT_MAT_JHN) $(TAGNT_ACT_REV) $(BSB_SOURCE) $(MSB_SCAFFOLD) $(LEXICON):
+$(TAGNT_MAT_JHN) $(TAGNT_ACT_REV) $(BSB_SOURCE) $(MSB_SCAFFOLD) $(LEXICON) $(INPUT_CSV):
 	@echo "Error: $@ not found. Run './fetch_sources.sh' first." && exit 1
 
 # Parse TAGNT into structured data
@@ -81,3 +84,26 @@ test: $(OUTPUT_DIR)/aligned.json
 # Clean generated files
 clean:
 	rm -rf $(OUTPUT_DIR)
+
+# Create a GitHub release with zipped assets
+# Usage: make release VERSION=v1.0
+release: $(OUTPUT_DIR)/blb_interlinear.tsv
+	@echo "Creating release $(VERSION)..."
+	@if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Error: Working tree is not clean. Commit changes first."; \
+		exit 1; \
+	fi
+	@echo "Packaging assets..."
+	@mkdir -p $(OUTPUT_DIR)/release
+	@zip -j $(OUTPUT_DIR)/release/BLB_interlinear_tsv.zip $(OUTPUT_DIR)/blb_interlinear.tsv
+	@zip -j $(OUTPUT_DIR)/release/BLB_source_csv.zip $(INPUT_CSV)
+	@zip -j $(OUTPUT_DIR)/release/BLB_aligned_json.zip $(OUTPUT_DIR)/aligned.json
+	git tag -f $(VERSION)
+	git push origin $(VERSION)
+	gh release create $(VERSION) \
+		--title "BLB Interlinear $(VERSION)" \
+		--notes-file RELEASE_NOTES.md \
+		$(OUTPUT_DIR)/release/BLB_interlinear_tsv.zip \
+		$(OUTPUT_DIR)/release/BLB_source_csv.zip \
+		$(OUTPUT_DIR)/release/BLB_aligned_json.zip
+	@echo "Released $(VERSION): https://github.com/BSB-publishing/blb2bsb/releases/tag/$(VERSION)"

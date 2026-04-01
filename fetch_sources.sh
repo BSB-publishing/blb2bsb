@@ -11,10 +11,12 @@
 #   BSB source tables     — bereanbible.com (free licensing)
 #   MSB source tables     — majoritybible.com (free licensing)
 #   BSB Strong's USJ      — BSB-publishing/bsb2usfm, GitHub release
+#   BLB translation       — literalbible.com (free licensing)
 #
 set -euo pipefail
 
-SOURCES_DIR="$(cd "$(dirname "$0")" && pwd)/sources"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SOURCES_DIR="$SCRIPT_DIR/sources"
 mkdir -p "$SOURCES_DIR"
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -128,6 +130,29 @@ else
     echo "    Extracted $(ls -1 "$BSB_USJ_DIR"/*.usj | wc -l) books."
 fi
 
+# ── 5. Berean Literal Bible (xlsx → csv) ──────────────────────────────────────
+
+echo ""
+echo "=== Berean Literal Bible ==="
+
+BLB_XLSX="$SOURCES_DIR/blb.xlsx"
+BLB_CSV="$SOURCES_DIR/blb.csv"
+
+if [ -f "$BLB_CSV" ]; then
+    # Check if xlsx is newer than csv (re-convert if source updated)
+    fetch_url "https://literalbible.com/blb.xlsx" "$BLB_XLSX"
+    if [ "$BLB_XLSX" -nt "$BLB_CSV" ]; then
+        echo "  Converting xlsx → csv..."
+        python3 "$SCRIPT_DIR/xlsx2csv.py" "$BLB_XLSX" -o "$BLB_CSV"
+    else
+        echo "  CSV up to date."
+    fi
+else
+    fetch_url "https://literalbible.com/blb.xlsx" "$BLB_XLSX"
+    echo "  Converting xlsx → csv..."
+    python3 "$SCRIPT_DIR/xlsx2csv.py" "$BLB_XLSX" -o "$BLB_CSV"
+fi
+
 # ── Summary ───────────────────────────────────────────────────────────────────
 
 echo ""
@@ -139,5 +164,6 @@ echo "  MSB source:        $(du -h "$SOURCES_DIR/msb_source.tsv" 2>/dev/null | c
 echo "  Greek lexicon:     $(du -h "$SOURCES_DIR/stepbible-tbesg.json" 2>/dev/null | cut -f1 || echo 'MISSING')"
 echo "  Hebrew lexicon:    $(du -h "$SOURCES_DIR/stepbible-tbesh.json" 2>/dev/null | cut -f1 || echo 'MISSING')"
 echo "  BSB Strong's USJ:  $(ls -1 "$SOURCES_DIR/bsb_strongs_full/"*.usj 2>/dev/null | wc -l | tr -d ' ') books"
+echo "  BLB translation:  $(du -h "$SOURCES_DIR/blb.csv" 2>/dev/null | cut -f1 || echo 'MISSING')"
 echo ""
 echo "All sources ready. Run 'make all' to build the pipeline."
