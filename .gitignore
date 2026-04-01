@@ -1,13 +1,17 @@
 __pycache__/
 .claude/
-content_usj/bereanbible/*
-!content_usj/bereanbible/.gitkeep
-content_usj/majoritybible/*
-!content_usj/majoritybible/.gitkeep
-cache/bereanbible/*
-!cache/bereanbible/.gitkeep
-cache/majoritybible/*
-!cache/majoritybible/.gitkeep
+
+# Source data (fetched by fetch_sources.sh)
+sources/*
+!sources/.gitkeep
+
+# Generated output
 output/
+
+# Legacy directories
+cache/
+content_usj/
+
+# Example/reference files
 example/
 earlier/
