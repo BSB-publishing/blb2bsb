@@ -1,0 +1,119 @@
+# License Information
+
+This repository contains multiple types of content with different licenses:
+
+
+## 1. Berean Literal Bible (BLB) Text - Free Licensing
+
+The **Berean Literal Bible** text (in `example/blb.csv` and column 18 of the
+output TSV) is Copyright © 2015, 2022 by Bible Hub. It is made available under
+free licensing for use in websites, apps, software, and audio.
+
+For full terms: http://berean.bible/licensing.htm
+
+Contact: bereanstudybible@aol.com
+
+
+## 2. BSB / MSB Source Tables - Public Domain
+
+The **Berean Standard Bible** and **Majority Standard Bible** interlinear source
+tables (used as scaffold and training data) are dedicated to the **Public Domain**.
+
+- Berean Standard Bible: https://bereanbible.com
+- Majority Standard Bible: https://majoritybible.com
+
+No attribution is required (though appreciated).
+
+
+## 3. STEPBible Data - CC BY 4.0
+
+The following data is created by **STEPBible.org** based on work at
+**Tyndale House, Cambridge** and is licensed under
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+### TAGNT (Translators Amalgamated Greek New Testament)
+- Files: `sources/tagnt_mat_jhn.txt`, `sources/tagnt_act_rev.txt`
+- Source: https://github.com/STEPBible/STEPBible-Data
+- Contains: Greek NT words with Strong's numbers, morphology, glosses, and
+  text tradition data from all major editions (NA27/28, TR, Byz, SBL, WH, Treg, Tyn)
+
+### Extended Strong's Lexicons
+- Files: `sources/stepbible-tbesg.json` (Greek), `sources/stepbible-tbesh.json` (Hebrew)
+- Source: https://github.com/STEPBible/STEPBible-Data
+- Packaged by: https://www.npmjs.com/package/@metaxia/scriptures-source-stepbible-lexicon
+- Contains: Glosses and definitions for all Strong's numbers
+
+### Required Attribution (CC BY 4.0)
+
+When using output data that incorporates STEPBible content, please include:
+
+> Greek text data from TAGNT — Translators Amalgamated Greek New Testament
+> ([STEPBible.org](https://www.STEPBible.org), CC BY 4.0).
+> Data created by www.STEPBible.org based on work at Tyndale House, Cambridge.
+
+For more details on the licence:
+- You may include any part of this data in software or publications
+  without requesting permission
+- You may download and reformat the data for your application
+- Proposed corrections should be sent to STEPBibleATgmail.com
+- Please refer others to github.com/STEPBible as the source of the data
+
+
+## 4. Conversion Software and Tools - MIT License
+
+The **software tools** in this repository (Python scripts, Makefile,
+fetch_sources.sh) are licensed under the MIT License:
+
+```
+MIT License
+
+Copyright (c) 2024 BSB Publishing, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+
+## Summary
+
+| Content | License | Attribution Required? |
+|---------|---------|----------------------|
+| **BLB text** | Free licensing (Bible Hub) | See berean.bible/licensing.htm |
+| **BSB/MSB source tables** | Public Domain | No |
+| **TAGNT Greek data** | CC BY 4.0 (STEPBible.org) | **Yes** — credit STEPBible.org and Tyndale House |
+| **Strong's lexicons** | CC BY 4.0 (STEPBible.org) | **Yes** — credit STEPBible.org and Tyndale House |
+| **Software tools** | MIT | Yes (for software redistribution) |
+
+
+## Output Data
+
+The output file (`output/blb_interlinear.tsv`) is a derivative work combining
+data from multiple sources. Users of the output must comply with all applicable
+licenses above. In practice this means:
+
+1. Include the STEPBible CC BY 4.0 attribution when distributing the output
+2. Comply with BLB free licensing terms (see http://berean.bible/licensing.htm)
+3. The BSB/MSB structural data carries no restrictions
+
+
+## Questions?
+
+- BLB text licensing: http://berean.bible/licensing.htm
+- STEPBible data: STEPBibleATgmail.com
+- BSB/MSB text: https://bereanbible.com
+- This software: Open an issue on GitHub
