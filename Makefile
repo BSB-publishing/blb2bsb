@@ -10,8 +10,8 @@ MSB_SCAFFOLD = $(SOURCES_DIR)/msb_source.tsv
 LEXICON = $(SOURCES_DIR)/stepbible-tbesg.json
 USJ_DIR = $(SOURCES_DIR)/bsb_strongs_full
 
-# Input and output
-INPUT_CSV = $(SOURCES_DIR)/blb.csv
+# Input: use CSV from input/ if present, otherwise default to sources/blb.csv
+INPUT_CSV = $(or $(firstword $(wildcard input/*.csv)),$(SOURCES_DIR)/blb.csv)
 OUTPUT_DIR = output
 
 # Release version (set via: make release VERSION=v1.1)
@@ -40,7 +40,8 @@ help:
 	@echo "  make clean          -- remove generated output files"
 	@echo "  make release        -- create GitHub release (VERSION=v1.0)"
 	@echo ""
-	@echo "Input:  $(INPUT_CSV) (Berean Literal Bible)"
+	@echo "Input:  $(INPUT_CSV)"
+	@echo "        (place a .csv in input/ to override the default BLB)"
 	@echo "Output: $(OUTPUT_DIR)/blb_interlinear_bsb.tsv (BSB scaffold)"
 	@echo "        $(OUTPUT_DIR)/blb_interlinear_msb.tsv (MSB scaffold)"
 

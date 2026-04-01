@@ -5,6 +5,10 @@ __pycache__/
 sources/*
 !sources/.gitkeep
 
+# Custom input (CSV files only, keep README)
+input/*
+!input/README.md
+
 # Generated output
 output/
 
